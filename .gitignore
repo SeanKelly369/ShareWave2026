@@ -1,0 +1,45 @@
+# IntelliJ / Android Studio
+.idea/
+*.iml
+out/
+
+# Gradle / Kotlin
+.gradle/
+.kotlin/
+**/build/
+
+# Local Android config
+local.properties
+
+# macOS
+.DS_Store
+
+# Android build tools
+**/captures/
+.externalNativeBuild/
+.cxx/
+
+# Node (if you add JS tooling later)
+node_modules/
+
+# Logs / dumps
+*.log
+*.hprof
+
+# App artifacts
+**/*.apk
+**/*.aab
+
+# Xcode / iOS user files
+**/xcuserdata/
+
+# If you have Xcode projects in-repo (often generated)
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# Song files
+*.mp3
