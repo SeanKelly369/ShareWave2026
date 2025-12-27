@@ -9,7 +9,9 @@ import androidx.compose.ui.unit.dp
 import com.example.sharpwave2026.player.*
 
 @Composable
-fun SharpWaveApp() {
+fun SharpWaveApp(
+) {
+
     val player = remember { providePlayer() }
     val state by player.state.collectAsState(PlayerState())
 
@@ -22,6 +24,17 @@ fun SharpWaveApp() {
             ),
             startIndex = 0
         )
+    }
+
+    val dur = state.durationMs.coerceAtLeast(1L)
+    val pos = state.positionMs.coerceIn(0L, dur)
+
+    var isDragging by remember { mutableStateOf(false) }
+    var dragMs by remember { mutableStateOf(0L) }
+
+    LaunchedEffect(pos, dur, isDragging) {
+        if (!isDragging) dragMs = pos
+    
     }
 
     MaterialTheme {
@@ -42,6 +55,32 @@ fun SharpWaveApp() {
                         }
                         OutlinedButton(onClick = player::next, enabled = state.queue.isNotEmpty()) { Text("Next")}
                     }
+                    Spacer(Modifier.height(12.dp))
+
+                    val dur = state.durationMs.coerceAtLeast(1L)
+                    val pos = state.positionMs.coerceIn(0L, dur)
+
+                    var isDragging by remember { mutableStateOf(false) }
+                    var dragMs by remember { mutableStateOf(0L) }
+
+                    LaunchedEffect(pos, dur, isDragging) {
+                        if (!isDragging) dragMs = pos
+                    }
+
+                    Slider(
+                        value = dragMs.toFloat() / dur.toFloat(),
+                        onValueChange = { frac ->
+                            isDragging = true
+                            dragMs = (frac * dur).toLong()
+                        },
+                        onValueChangeFinished = {
+                            isDragging = false
+                            player.seekTo(dragMs)
+                        },
+                        enabled = state.queue.isNotEmpty() && dur > 1L,
+                        modifier = Modifier.fillMaxWidth()
+
+                    )
                 }
             }
 
@@ -56,7 +95,7 @@ fun SharpWaveApp() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable { player.setQueue(state.queue, idx ); player.play() },
-                    trailingContent = { if (idx == state.index ) Text(if (state.isPlaying) "▶" else "Ⅱ") }
+                    trailingContent = { if (idx == state.index ) Text(if (state.isPlaying) "Ⅱ" else "▶") }
                 )
                 HorizontalDivider()
             }

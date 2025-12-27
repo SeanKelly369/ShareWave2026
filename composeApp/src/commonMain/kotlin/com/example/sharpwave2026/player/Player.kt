@@ -12,19 +12,22 @@ data class Track (
 data class PlayerState (
     val queue: List<Track> = emptyList(),
     val index: Int = -1,
-    val isPlaying: Boolean = false
+    val isPlaying: Boolean = false,
+    val positionMs: Long = 0L,
+    val durationMs: Long = 0L,
 ) {
     val current: Track? get() = queue.getOrNull(index)
 }
 
 interface Player {
     val state: Flow<PlayerState>
+
     fun setQueue(tracks: List<Track>, startIndex: Int = 0)
     fun play()
     fun pause()
     fun toggle()
     fun next()
     fun prev()
-}
 
-expect fun providePlayer(): Player
+    fun seekTo(positionMs: Long)
+}

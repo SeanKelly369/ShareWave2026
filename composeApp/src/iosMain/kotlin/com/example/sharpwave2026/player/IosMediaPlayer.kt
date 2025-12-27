@@ -66,6 +66,7 @@ class IosMediaPlayer: Player {
 
     override fun pause() {
         ap?.pause()
+        ap?.currentTime = ap?.currentTime ?: 0.0
         _state.value = _state.value.copy(isPlaying = false)
     }
 
