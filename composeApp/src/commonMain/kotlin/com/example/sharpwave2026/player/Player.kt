@@ -6,7 +6,9 @@ data class Track (
     val id: String,
     val title: String,
     val artist: String = "",
-    val uri: String = ""
+    val uri: String = "",
+    val durationMs: Long? = null,
+    val album: String? = null
 )
 
 data class PlayerState (

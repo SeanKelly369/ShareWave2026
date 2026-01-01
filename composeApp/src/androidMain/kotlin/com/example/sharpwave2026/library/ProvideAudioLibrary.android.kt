@@ -1,11 +1,11 @@
-package com.example.sharpwave2026.player
+package com.example.sharpwave2026.library
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-actual fun providePlayer(): Player {
+actual fun provideAudioLibrary(): AudioLibrary {
     val ctx = LocalContext.current.applicationContext
-    return remember { AndroidMediaPlayer(ctx) }
+    return remember { AndroidAudioLibrary(ctx) }
 }
